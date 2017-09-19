@@ -48,13 +48,15 @@ var svg = d3.select("body").append("svg")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-d3.csv("data.csv", function(error, data) {
+d3.csv("data2.csv", function(error, data) {
   if (error) throw error;
 
   // format the data
   data.forEach(function(d) {
       d.date1 = parseTime(d.date);
       d.close = +d.close;
+      d.open = +d.open;  //  <= added this for tidy house keeping
+      d.diff = Math.round(( d.close - d.open ) * 100 ) / 100;
   });
 
   // Scale the range of the data
@@ -113,7 +115,12 @@ function tabulate(data, columns) {
 }
 
 // render the table
- var peopleTable = tabulate(data, ["date", "close"]);
+var peopleTable = tabulate(data, ["date", "close", "open", "diff"]);
+
+peopleTable.selectAll("tbody tr") // sorting on close price, every row is binded to a data
+  .sort(function(a, b) {
+    return d3.descending(a.close, b.close);
+  });
 
 });
 
