@@ -1,0 +1,3 @@
+This is a simple graph demonstrating the addition of a table with a graph (open in full screen to see the table). This was written using d3.js v4 and is a follow on to the simple line graph example [here](http://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0). 
+
+This graph is part of the code samples for the update to the book [D3 Tips and Tricks](https://leanpub.com/d3-t-and-t-v4) to version 4 of d3.js.
