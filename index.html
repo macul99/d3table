@@ -11,6 +11,7 @@
 /* This sets a padding of 1 px around each cell and 4 px between each column */
 td, th {
     padding: 1px 4px;
+    border: 1px black solid;
 }
 
 </style>
@@ -81,7 +82,9 @@ d3.csv("data2.csv", function(error, data) {
 // The table generation function
 function tabulate(data, columns) {
     var table = d3.select("body").append("table")
-            .attr("style", "margin-left: 400px"),
+            .attr("style", "margin-left: 400px")
+            .style("border-collapse", "collapse") // border-collapse style tells the table to overlap each cell’s borders
+            .style("border", "2px black solid"), // <= Add this line in
         thead = table.append("thead"),
         tbody = table.append("tbody");
 
@@ -114,12 +117,17 @@ function tabulate(data, columns) {
     return table;
 }
 
-// render the table
-var peopleTable = tabulate(data, ["date", "close", "open", "diff"]);
+  // render the table
+  var peopleTable = tabulate(data, ["date", "close", "open", "diff"]);
 
-peopleTable.selectAll("tbody tr") // sorting on close price, every row is binded to a data
-  .sort(function(a, b) {
-    return d3.descending(a.close, b.close);
+  peopleTable.selectAll("tbody tr") // sorting on close price, every row is binded to a data
+    .sort(function(a, b) {
+      return d3.descending(a.close, b.close);
+  });
+
+  peopleTable.selectAll("thead th")
+    .text(function(column) {
+     return column.charAt(0).toUpperCase() + column.substr(1);
   });
 
 });
